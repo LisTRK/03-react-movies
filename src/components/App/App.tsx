@@ -13,15 +13,8 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const App = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
-    const [movieModal, setMovieModal] = useState<Movie>({id: 0,
-    poster_path: "",
-    backdrop_path: "",
-    title: "",
-    overview: "",
-    release_date: "",
-    vote_average: 0});
+    const [movieModal, setMovieModal] = useState<Movie|null>();
     const [totalPage, setTotalPage] = useState(1);
-    const [isOpenModal, setIsOpenModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
@@ -37,17 +30,16 @@ const App = () => {
             setTotalPage(1);
             setIsLoading(true);
             setIsError(false);
-            const featchImage = await fetchMovies(newQuery);
-            if (featchImage.results.length === 0) {
+            const featchMoviesValue = await fetchMovies(newQuery);
+            if (featchMoviesValue.results.length === 0) {
                 toast.error("No movies found for your request.");
                 return
             }
-            setMovies(featchImage.results);
-            setTotalPage(featchImage.total_pages);
+            setMovies(featchMoviesValue.results);
+            setTotalPage(featchMoviesValue.total_pages);
             
         } catch {
             console.log("Error");
-            setIsLoading(false)
             setIsError(true)
         } finally {
             setIsLoading(false)
@@ -55,21 +47,20 @@ const App = () => {
     };
 
     const handleSelect = (movie: Movie) => {
-        setIsOpenModal(true);
         setMovieModal(movie);
     }
 
 
     const onCloseModal = () => {
-        setIsOpenModal(false);
+        setMovieModal(null);
     }
 
     return <div className={css.app}>
-        <SearchBar onSearch={handelSearch} />
+        <SearchBar onSubmit={handelSearch} />
         <MovieGrid onSelect={handleSelect} movies={movies}  />
         {isLoading && <Loader />}
         {isError && <ErrorMessage />}
-        {isOpenModal && <MovieModal movie={movieModal } onClose={ onCloseModal} />}
+        {movieModal && <MovieModal movie={movieModal } onClose={ onCloseModal} />}
         
         <div><Toaster /></div>
         

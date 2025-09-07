@@ -3,13 +3,13 @@ import type { Movie } from "../../types/movie";
 import css from "./MovieModal.module.css";
 import { useEffect } from "react";
 
-interface MovisModalType {
+interface MovisModalProps {
     movie: Movie,
     onClose: () => void
 }
 
 
-const MovieModal = ({ movie, onClose }: MovisModalType) => {
+const MovieModal = ({ movie, onClose }: MovisModalProps) => {
     const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) {
             onClose();
