@@ -13,8 +13,7 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const App = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
-    const [movieModal, setMovieModal] = useState<Movie>({});
-    const [query, setQuery] = useState("");
+    const [movieModal, setMovieModal] = useState<Movie>();
     const [totalPage, setTotalPage] = useState(1);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
