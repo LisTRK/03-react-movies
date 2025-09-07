@@ -13,7 +13,13 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const App = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
-    const [movieModal, setMovieModal] = useState<Movie>();
+    const [movieModal, setMovieModal] = useState<Movie>({id: 0,
+    poster_path: "",
+    backdrop_path: "",
+    title: "",
+    overview: "",
+    release_date: "",
+    vote_average: 0});
     const [totalPage, setTotalPage] = useState(1);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +27,8 @@ const App = () => {
 
    
 
+    console.log("totalPage: ", totalPage);
+    
    
 
     const handelSearch = async (newQuery: string) => {
